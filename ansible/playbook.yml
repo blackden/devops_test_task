@@ -3,15 +3,50 @@
   hosts: all
   become: true
   vars:
-    user_name: carxadmin
+    user_name: exampleadmin
     # ВАЖНО: В реальной среде используйте Ansible Vault для хранения паролей!
     # Для тестового задания оставляем в открытом виде для простоты проверки.
-    user_password: "carxpass"
+    user_password: "examplepass"
     # Переменная для пути к публичному ключу. Можно будет переопределить при запуске.
     ssh_public_key_path: "~/.ssh/id_rsa.pub"
 
   tasks:
-    # Здесь будут наши задачи
+    - name: Update all packages to the latest version
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+        cache_valid_time: 3600
+
+    - name: Add Nginx official GPG key
+      ansible.builtin.get_url:
+          url: https://nginx.org/keys/nginx_signing.key
+          dest: /usr/share/keyrings/nginx-archive-keyring.asc
+          
+    - name: Add Nginx repo
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.asc] http://nginx.org/packages/ubuntu {{ ansible_distribution_release }} nginx"
+        state: present
+      notify: Update apt cache
+
+    - name: Set nginx package priority
+      ansible.builtin.copy:
+        dest: /etc/apt/preferences.d/99nginx
+        content: |
+          Package: *
+          Pin: origin nginx.org
+          Pin: release o=nginx
+          Pin-Priority: 900
+
+    - name: install nginx
+      ansible.builtin.apt:
+        pkg: 
+          - nginx
+          - nginx-doc
+        state: present
+      notify: 
+        - Start Nginx
+
+
 
   handlers:
     # Здесь будут наши обработчики
