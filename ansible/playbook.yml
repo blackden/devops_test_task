@@ -1,0 +1,17 @@
+---
+- name: Configure Nginx Web Server and Secure SSH
+  hosts: all
+  become: true
+  vars:
+    user_name: carxadmin
+    # ВАЖНО: В реальной среде используйте Ansible Vault для хранения паролей!
+    # Для тестового задания оставляем в открытом виде для простоты проверки.
+    user_password: "carxpass"
+    # Переменная для пути к публичному ключу. Можно будет переопределить при запуске.
+    ssh_public_key_path: "~/.ssh/id_rsa.pub"
+
+  tasks:
+    # Здесь будут наши задачи
+
+  handlers:
+    # Здесь будут наши обработчики

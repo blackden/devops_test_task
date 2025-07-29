@@ -1,0 +1,8 @@
+# Это пример файла инвентаря.
+# Скопируйте его в inventory.ini и замените your_server_ip на реальный IP-адрес.
+# ansible_user=root указывает, что Ansible будет подключаться к серверу от имени root.
+# Это необходимо для первоначальной настройки.
+
+
+[all]
+your_server_ip ansible_user=root
