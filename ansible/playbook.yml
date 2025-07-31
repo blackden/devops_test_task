@@ -63,6 +63,12 @@
         group: root
         mode: '0644'
 
+    - name: Create a new user '{{ user_name }}'
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        password: "{{ user_password | password_hash('sha512') }}"
+        shell: /bin/bash
+        state: present
 
 
 
