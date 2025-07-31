@@ -44,7 +44,7 @@
           - nginx-doc
         state: present
       notify: 
-        - Start Nginx
+        - restart nginx
 
 
 
