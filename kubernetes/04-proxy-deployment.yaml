@@ -17,6 +17,7 @@ spec:
       - name: proxy-container
         # ВАЖНО: Укажите имя вашего образа прокси
         image: devops_test_task_proxy:latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         volumeMounts:

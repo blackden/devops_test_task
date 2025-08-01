@@ -19,5 +19,6 @@ spec:
       - name: webapp-container
         # ВАЖНО: Здесь нужно указать имя вашего образа
         image: devops_test_task_webapp:latest
+        imagePullPolicy: IfNotPresent # или Never. Не будет пытаться скачать, если образ уже есть локально.
         ports:
         - containerPort: 3000
