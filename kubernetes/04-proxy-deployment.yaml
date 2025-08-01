@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-deployment
+  namespace: carx-app
+spec:
+  replicas: 2 # Двух реплик для прокси более чем достаточно для отказоустойчивости
+  selector:
+    matchLabels:
+      app: proxy
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      containers:
+      - name: proxy-container
+        # ВАЖНО: Укажите имя вашего образа прокси
+        image: devops_test_task_proxy:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/conf.d/default.conf # Куда монтируем
+          subPath: default.conf # Какой ключ из ConfigMap использовать как файл
+      volumes:
+      - name: nginx-config-volume
+        configMap:
+          name: proxy-config # Ссылка на наш ConfigMap

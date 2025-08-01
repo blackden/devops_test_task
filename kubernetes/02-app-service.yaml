@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service # То самое имя, которое мы использовали в nginx.conf!
+  namespace: carx-app
+spec:
+  type: ClusterIP # Доступен только внутри кластера
+  selector:
+    app: webapp # Находит все поды с этой меткой
+  ports:
+  - protocol: TCP
+    port: 3000      # Порт, на котором сервис будет слушать
+    targetPort: 3000 # Порт, на который будет перенаправляться трафик (порт контейнера)

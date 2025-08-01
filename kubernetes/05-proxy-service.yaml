@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-service
+  namespace: carx-app
+spec:
+  type: NodePort # Делает сервис доступным на определенном порту на каждом узле кластера
+  selector:
+    app: proxy
+  ports:
+  - protocol: TCP
+    port: 80 # Внутренний порт сервиса
+    targetPort: 80 # Порт подов прокси
+    # Для локального тестирования удобно задать статический порт.
+    # В облаке здесь был бы тип LoadBalancer.
+    nodePort: 30080

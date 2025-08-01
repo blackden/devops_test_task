@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  namespace: carx-app
+  labels:
+    app: webapp
+spec:
+  replicas: 3 # Как и требовалось в задании
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp-container
+        # ВАЖНО: Здесь нужно указать имя вашего образа
+        image: devops_test_task_webapp:latest
+        ports:
+        - containerPort: 3000
