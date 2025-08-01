@@ -22,6 +22,7 @@ WORKDIR /app
 # Создаем непривилегированного пользователя и группу для запуска приложения
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 appuser --ingroup nodejs
+
 USER appuser
 
 # Открываем порт, на котором работает приложение
